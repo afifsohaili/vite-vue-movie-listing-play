@@ -1,25 +1,36 @@
 <template>
-  <h1>
-    App
-  </h1>
-  <v-button @click="count++">Count: {{count}}</v-button>
+  <header>
+    <h1><a href="#">Movie</a></h1>
+  </header>
+  <section class="favourites">
+    <h2>Favourites</h2>
+    <favourites-layout>
+      <movie-card/>
+      <movie-card/>
+      <movie-card/>
+      <movie-card/>
+      <movie-card/>
+    </favourites-layout>
+  </section>
+  <section class="listings">
+    <h2>Movies</h2>
+    <listings-layout>
+      <movie-card/>
+    </listings-layout>
+  </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-import VButton from './components/VButton.vue'
+<script>
+import MovieCard from "./components/MovieCard.vue";
+import ListingsLayout from "./components/ListingsLayout.vue";
+import FavouritesLayout from "./components/FavouritesLayout.vue";
 
-export default defineComponent({
+export default {
+  name: 'App',
   components: {
-    VButton,
-  },
-
-  setup() {
-    const count = ref(0)
-
-    return {
-      count,
-    }
-  },
-})
+    FavouritesLayout,
+    ListingsLayout,
+    MovieCard
+  }
+}
 </script>
