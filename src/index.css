@@ -1,19 +1,24 @@
 :root {
     --color-primary: #6e41e0;
+    --color-primary-light: #a493d7;
     --color-primary-accent: #27187e;
     --color-secondary: #e75a7c;
-    --color-light: #f2f5ea;
+    --color-light: #fff;
     --color-light-accent: #f2f5ea;
+    --font-primary: 'Raleway', sans-serif;
+    --font-secondary: 'Hind Guntur', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Raleway', sans-serif;
+    font-family: var(--font-primary);
     font-weight: 700;
 }
 
 body {
-    font-family: 'Hind Guntur', sans-serif;
+    font-family: var(--font-secondary);
     font-weight: 400;
+    font-size: 16px;
+    line-height: 1.25;
 }
 
 a {
