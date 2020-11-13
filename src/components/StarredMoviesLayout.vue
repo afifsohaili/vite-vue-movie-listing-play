@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "FavouritesLayout"
+  name: "StarredMoviesLayout"
 }
 </script>
 
