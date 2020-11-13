@@ -29,12 +29,13 @@ const find: ({page, title}: FindMoviesParam) => Promise<MovieListings> = async (
         page,
         ...title?.length ? {Title: title} : {}
     }
-    const results = await httpService.get<MoviesApiResponse>('search', {params});
-    const listings = {
-        ...results.data,
-        data: results.data.data.map(({Title, Year, imdbID}) => ({title: Title, year: Year, imdbId: imdbID}))
+    const {data} = await httpService.get<MoviesApiResponse>('search', {params});
+    return {
+        ...data,
+        perPage: data.per_page,
+        totalPages: data.total_pages,
+        data: data.data.map(({Title, Year, imdbID}) => ({title: Title, year: Year, imdbId: imdbID}))
     }
-    return listings
 }
 
 export {

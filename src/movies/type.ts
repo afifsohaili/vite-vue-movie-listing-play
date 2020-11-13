@@ -6,8 +6,8 @@ export interface Movie {
 
 export interface MovieListings {
     page: number;
-    per_page: number;
+    perPage: number;
     total: number;
-    total_pages: number;
+    totalPages: number;
     data: Array<Movie>
 }
