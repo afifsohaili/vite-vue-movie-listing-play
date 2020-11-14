@@ -24,21 +24,29 @@
                   @star="starMovie"
                   @unstar="unstarMovie"/>
     </listings-layout>
-    <a role="button" @click.prevent="currentPage--">Previous</a>
-    <a role="button" @click.prevent="currentPage++">Next</a>
+    <listings-pagination :current-page="currentPage"
+                         :last-page="lastPage"
+                         @previousPage="currentPage--"
+                         @nextPage="currentPage++"/>
   </section>
 </template>
 
 <script lang="ts">
 import MovieCard from "./components/MovieCard.vue";
 import ListingsLayout from "./components/ListingsLayout.vue";
-import StarredMoviesLayout from "./components/StarredMoviesLayout.vue";
 import type {Ref, UnwrapRef} from "vue";
 import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import api from "./api";
 import {Movie} from "./movies/type";
+import ListingsPagination from "./ListingsPagination.vue";
 
-const fetchMovieListingsByPage = (pageToLoad: number, isLoading: Ref<boolean>, pages: Ref<Array<UnwrapRef<Array<StarrableMovie>>>>, error: Ref<string>) =>
+const fetchMovieListingsByPage = (
+    pageToLoad: number,
+    isLoading: Ref<boolean>,
+    pages: Ref<Array<UnwrapRef<Array<StarrableMovie>>>>,
+    error: Ref<string>,
+    lastPage: Ref<number>
+) =>
     async () => {
       if ((pages.value[pageToLoad]?.length ?? 0) > 0) {
         return;
@@ -47,6 +55,7 @@ const fetchMovieListingsByPage = (pageToLoad: number, isLoading: Ref<boolean>, p
         isLoading.value = true
         const response = await api.movies.find({page: pageToLoad});
         pages.value[response.page] = response.data.map(movie => ({...movie, isStarred: false}))
+        lastPage.value = response.totalPages
       } catch (err) {
         error.value = err.message
       } finally {
@@ -61,17 +70,18 @@ interface StarrableMovie extends Movie {
 export default defineComponent({
   name: 'App',
   components: {
+    ListingsPagination,
     ListingsLayout,
-    MovieCard,
-    StarredMoviesLayout
+    MovieCard
   },
   setup() {
     const isLoading = ref<boolean>(true)
     const pages = ref<Array<Array<StarrableMovie>>>([])
     const currentPage = ref<number>(1)
-    const error = ref<string>('')
+    const lastPage = ref<number>(1)
     const currentPageListings = computed(() => pages.value[currentPage.value])
     const starredMovies = computed(() => pages.value.flatMap(page => page.filter(movie => movie.isStarred)))
+    const error = ref<string>('')
 
     const starMovie = (imdbId: string) => {
       const targetMovie = pages.value[currentPage.value].find(movie => movie.imdbId === imdbId);
@@ -86,10 +96,10 @@ export default defineComponent({
       }
     }
 
-    onMounted(fetchMovieListingsByPage(1, isLoading, pages, error))
+    onMounted(fetchMovieListingsByPage(1, isLoading, pages, error, lastPage))
     watch(currentPage, async (currentPage) => fetchMovieListingsByPage(currentPage, isLoading, pages, error)())
 
-    return {isLoading, error, currentPageListings, currentPage, starredMovies, starMovie, unstarMovie}
+    return {currentPage, currentPageListings, error, isLoading, lastPage, starMovie, starredMovies, unstarMovie}
   }
 })
 </script>
@@ -105,5 +115,9 @@ export default defineComponent({
 
 h1 {
   text-align: center;
+}
+
+.listings {
+  min-height: 50vh;
 }
 </style>
