@@ -1,7 +1,7 @@
 <template>
-  <div class="movie">
+  <div class="movie" :class="isStarred && 'movie--starred'">
     <p class="movie__imdbid">{{imdbId}}</p>
-    <h3 class="movie__title">{{ title }}</h3>
+    <h3 class="movie__title" :title="title">{{ title }}</h3>
     <p class="movie__footer">
       <span class="movie__year">{{ year }}</span>
       <a role="button"
@@ -46,15 +46,29 @@ export default defineComponent({
 }
 
 .movie {
-  background: linear-gradient(45deg, var(--color-primary), var(--color-primary-accent));
+  @extend %movie-card-grid;
+
+  background: linear-gradient(45deg, var(--color-secondary), var(--color-primary) 20%, var(--color-primary-accent));
+  background-size: 140% 140%;
   border-radius: 2rem 0.75rem;
   color: var(--color-light);
   padding: 1.5rem;
-  @extend %movie-card-grid;
+  transition: background-position 0.5s ease-in-out;
+
+  &.movie--starred {
+    background-position: 0 100%;
+  }
 }
 
 .movie__title {
+  -webkit-box-orient: vertical;
+  /* Note: As of right now, line clamps are part of the CSS Overflow Module Level 3. Still in Working Draft. */
+  /* Note: It is widely supported, though. Unless you're using IE11. */
+  /* Note: Don't use IE11, please. */
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
   margin-bottom: 2rem;
+  overflow: hidden;
 }
 
 .movie__year {

@@ -124,6 +124,7 @@ export default defineComponent({
     const searchResults = ref<StarrableMovie[]>([])
     const isSearching = ref<boolean>(false)
     const starredMovies = ref<StarrableMovie[]>([])
+    // TODO: Display error message in page
     const error = ref<string>('')
 
     const starMovie = (targetMovie: StarrableMovie) => {
