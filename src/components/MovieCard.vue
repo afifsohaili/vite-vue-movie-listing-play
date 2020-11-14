@@ -84,7 +84,8 @@ export default defineComponent({
 }
 
 .movie__star {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  height: 1.5rem;
   transition: transform 1s cubic-bezier(.46,.45,0,1), color 1s cubic-bezier(.17,.62,.48,.37);
   transform-origin: center center;
 

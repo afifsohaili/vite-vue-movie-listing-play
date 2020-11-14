@@ -2,9 +2,10 @@
     --color-primary: #6e41e0;
     --color-primary-light: #a493d7;
     --color-primary-accent: #27187e;
-    --color-secondary: #e75a7c;
+    --color-secondary: #f3d72c;
+    --color-secondary-accent: #db770a;
     --color-light: #fff;
-    --color-light-accent: #f2f5ea;
+    --color-light-accent: #eaf1d8;
     --font-primary: 'Raleway', sans-serif;
     --font-secondary: 'Hind Guntur', sans-serif;
 }
@@ -14,11 +15,26 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
 }
 
+html, body, main {
+    height: 100%;
+}
+
 body {
     font-family: var(--font-secondary);
     font-weight: 400;
     font-size: 16px;
     line-height: 1.25;
+    background: var(--color-light)
+        url('data:image/svg+xml;base64,ICAgIDxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTQ0MCAzMjAiPgogICAgICAgIDxwYXRoIGZpbGw9IiMyNzE4N2UiIGZpbGwtb3BhY2l0eT0iMSIgZD0iTTAsOTZMNDgsMTE3LjNDOTYsMTM5LDE5MiwxODEsMjg4LDE3MC43QzM4NCwxNjAsNDgwLDk2LDU3NiwxMDEuM0M2NzIsMTA3LDc2OCwxODEsODY0LDIwMi43Qzk2MCwyMjQsMTA1NiwxOTIsMTE1MiwxNjBDMTI0OCwxMjgsMTM0NCw5NiwxMzkyLDgwTDE0NDAsNjRMMTQ0MCwzMjBMMTM5MiwzMjBDMTM0NCwzMjAsMTI0OCwzMjAsMTE1MiwzMjBDMTA1NiwzMjAsOTYwLDMyMCw4NjQsMzIwQzc2OCwzMjAsNjcyLDMyMCw1NzYsMzIwQzQ4MCwzMjAsMzg0LDMyMCwyODgsMzIwQzE5MiwzMjAsOTYsMzIwLDQ4LDMyMEwwLDMyMFoiPjwvcGF0aD4KICAgIDwvc3ZnPgo=')
+        fixed
+        no-repeat
+        left
+        bottom;
+}
+
+main {
+    margin: 0 auto;
+    width: clamp(min(100%, 320px), 100vw, 1500px);
 }
 
 a {

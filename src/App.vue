@@ -1,6 +1,9 @@
 <template>
   <header>
-    <h1><a href="#">Movie</a></h1>
+    <h1 class="logo">
+      <a href="#"><img src="./assets/images/logo.png" alt="Movie.list" class="logo__image"></a>
+      <span class="logo__text">Movie.list</span>
+    </h1>
   </header>
   <section class="starred-movies">
     <h2>Starred movies</h2>
@@ -90,3 +93,17 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.logo__text {
+  display: none;
+}
+
+.logo__image {
+  max-height: 120px;
+}
+
+h1 {
+  text-align: center;
+}
+</style>
