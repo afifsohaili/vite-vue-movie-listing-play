@@ -7,27 +7,35 @@
   </header>
   <section class="starred-movies">
     <h2>Starred movies</h2>
-    <listings-layout>
+    <listings-layout v-if="starredMovies.length > 0">
       <movie-card v-for="movie in starredMovies"
                   v-bind="movie"
                   :key="movie.imdbId"
                   @star="starMovie"
                   @unstar="unstarMovie"/>
     </listings-layout>
+    <p v-else>
+      You have not starred any movies. Click the <i class="icon-star-full"></i> to add one.
+    </p>
   </section>
   <section class="listings">
     <h2>Movies</h2>
-    <listings-layout>
-      <movie-card v-for="movie in currentPageListings"
-                  v-bind="movie"
-                  :key="movie.imdbId"
-                  @star="starMovie"
-                  @unstar="unstarMovie"/>
-    </listings-layout>
-    <listings-pagination :current-page="currentPage"
-                         :last-page="lastPage"
-                         @previousPage="currentPage--"
-                         @nextPage="currentPage++"/>
+    <centered-loading-indicator-wrapper v-if="isLoading">
+      <loading-indicator/>
+    </centered-loading-indicator-wrapper>
+    <template v-else>
+      <listings-layout>
+        <movie-card v-for="movie in currentPageListings"
+                    v-bind="movie"
+                    :key="movie.imdbId"
+                    @star="starMovie"
+                    @unstar="unstarMovie"/>
+      </listings-layout>
+      <listings-pagination :current-page="currentPage"
+                           :last-page="lastPage"
+                           @previousPage="currentPage--"
+                           @nextPage="currentPage++"/>
+    </template>
   </section>
 </template>
 
@@ -39,6 +47,8 @@ import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import api from "./api";
 import {Movie} from "./movies/type";
 import ListingsPagination from "./ListingsPagination.vue";
+import LoadingIndicator from "./components/LoadingIndicator.vue";
+import CenteredLoadingIndicatorWrapper from "./components/CenteredLoadingIndicatorWrapper.vue";
 
 const fetchMovieListingsByPage = (
     pageToLoad: number,
@@ -70,6 +80,8 @@ interface StarrableMovie extends Movie {
 export default defineComponent({
   name: 'App',
   components: {
+    CenteredLoadingIndicatorWrapper,
+    LoadingIndicator,
     ListingsPagination,
     ListingsLayout,
     MovieCard

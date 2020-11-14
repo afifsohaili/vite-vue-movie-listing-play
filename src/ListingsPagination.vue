@@ -13,6 +13,7 @@
     </p>
   </section>
 </template>
+
 <script lang="ts">
 import {SetupContext, computed} from 'vue'
 export default {
@@ -23,11 +24,7 @@ export default {
   },
   setup(props, context: SetupContext) {
     const isFirstPage = computed(() => props.currentPage === 1)
-    const isLastPage = computed(() => {
-      console.log('\n', 'props      ', props      );
-      console.log('\n', 'props.currentPage === props.lastPage', props.currentPage === props.lastPage);
-      return props.currentPage === props.lastPage;
-    })
+    const isLastPage = computed(() => props.currentPage === props.lastPage)
     const nextPage = () => {
       if (!isLastPage.value) {
         context.emit('nextPage')
@@ -68,7 +65,7 @@ export default {
     opacity: 0.7;
   }
 
-  &:hover {
+  &:hover:not(.pagination__button--disabled) {
     background: var(--color-secondary-accent-light);
   }
 }
