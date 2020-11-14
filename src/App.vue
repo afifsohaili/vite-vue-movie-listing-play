@@ -4,13 +4,13 @@
   </header>
   <section class="starred-movies">
     <h2>Starred movies</h2>
-    <starred-movies-layout>
+    <listings-layout>
       <movie-card v-for="movie in starredMovies"
                   v-bind="movie"
                   :key="movie.imdbId"
                   @star="starMovie"
                   @unstar="unstarMovie"/>
-    </starred-movies-layout>
+    </listings-layout>
   </section>
   <section class="listings">
     <h2>Movies</h2>
