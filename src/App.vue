@@ -10,6 +10,7 @@
     <listings-layout v-if="starredMovies.length > 0">
       <movie-card v-for="movie in starredMovies"
                   v-bind="movie"
+                  :is-starred="isStarred(movie.imdbId)"
                   :key="movie.imdbId"
                   @star="starMovie"
                   @unstar="unstarMovie"/>
@@ -27,6 +28,7 @@
       <listings-layout>
         <movie-card v-for="movie in currentPageListings"
                     v-bind="movie"
+                    :is-starred="isStarred(movie.imdbId)"
                     :key="movie.imdbId"
                     @star="starMovie"
                     @unstar="unstarMovie"/>
@@ -92,26 +94,24 @@ export default defineComponent({
     const currentPage = ref<number>(1)
     const lastPage = ref<number>(1)
     const currentPageListings = computed(() => pages.value[currentPage.value])
-    const starredMovies = computed(() => pages.value.flatMap(page => page.filter(movie => movie.isStarred)))
+    const starredMovies = ref<StarrableMovie[]>([])
     const error = ref<string>('')
 
-    const starMovie = (imdbId: string) => {
-      const targetMovie = pages.value[currentPage.value].find(movie => movie.imdbId === imdbId);
-      if (targetMovie) {
-        targetMovie.isStarred = true;
-      }
+    const starMovie = (targetMovie: StarrableMovie) => {
+      starredMovies.value.push({...targetMovie})
     }
-    const unstarMovie = (imdbId: string) => {
-      const targetMovie = pages.value[currentPage.value].find(movie => movie.imdbId === imdbId);
-      if (targetMovie) {
-        targetMovie.isStarred = false;
-      }
+    const unstarMovie = (targetMovie: StarrableMovie) => {
+      const targetIndex = starredMovies.value.findIndex(starredMovie => starredMovie.imdbId === targetMovie.imdbId);
+      starredMovies.value.splice(targetIndex, 1)
+    }
+    const isStarred = (imdbId: string) => {
+      return starredMovies.value.findIndex(starredMovie => starredMovie.imdbId === imdbId) > -1
     }
 
     onMounted(fetchMovieListingsByPage(1, isLoading, pages, error, lastPage))
     watch(currentPage, async (currentPage) => fetchMovieListingsByPage(currentPage, isLoading, pages, error)())
 
-    return {currentPage, currentPageListings, error, isLoading, lastPage, starMovie, starredMovies, unstarMovie}
+    return {currentPage, currentPageListings, error, isLoading, lastPage, starMovie, starredMovies, unstarMovie, isStarred}
   }
 })
 </script>

@@ -31,7 +31,7 @@ export default defineComponent({
   setup(props, context: SetupContext) {
     const toggleStar = () => {
       const event = props.isStarred ? 'unstar' : 'star'
-      context.emit(event, props.imdbId)
+      context.emit(event, props)
     }
     return {toggleStar}
   }
