@@ -1,12 +1,15 @@
-# Vite Typescript Starter
+# Movie Listings Lab
 
-Starter template for Vite + TypeScript project
+This is a lab for playing on:
+- Vue 3
+- Composition API
+- TypeScript
 
 ## Getting Started
 
 1. Clone this repo
-2. `yarn install`
-3. `yarn dev` or `yarn build`
+2. Run `yarn install`
+3. Run `yarn dev`
 
 ## License
 
