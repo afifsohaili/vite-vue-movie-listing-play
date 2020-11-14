@@ -7,6 +7,7 @@
     <starred-movies-layout>
       <movie-card v-for="movie in starredMovies"
                   v-bind="movie"
+                  :key="movie.imdbId"
                   @star="starMovie"
                   @unstar="unstarMovie"/>
     </starred-movies-layout>
@@ -16,6 +17,7 @@
     <listings-layout>
       <movie-card v-for="movie in currentPageListings"
                   v-bind="movie"
+                  :key="movie.imdbId"
                   @star="starMovie"
                   @unstar="unstarMovie"/>
     </listings-layout>
